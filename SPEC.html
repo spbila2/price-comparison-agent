@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אפיון: סוכן AI להשוואת מחירים וקנייה חכמה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sb-paper:#F6F7F9; --sb-band:#ECEFF3; --sb-card:#FFFFFF; --sb-line:#D3D9E0;
+  --sb-ink:#14181D; --sb-ink-2:#333B45; --sb-muted:#5F6B78;
+  --sb-royal:#1F4E79; --sb-royal-2:#2A6BA0; --sb-royal-soft:#E3ECF5; --sb-glow:#4A90D9;
+  --sb-dark:#0E1620;
+  --sb-on-dark-accent:#7FB3E6; --sb-on-dark-text:#C9D3DE; --sb-th:#DCE4EC; --sb-glow-faint:rgba(74,144,217,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--sb-paper);color:var(--sb-ink);font-family:'Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;font-size:20px;line-height:1.6}
+.sb-wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+p{margin:0 0 12px}
+a{color:var(--sb-royal)}
+
+.sb-hero{padding:56px 0 30px;text-align:center}
+.sb-eyebrow{font-size:15px;font-weight:500;color:var(--sb-muted);margin:0 0 12px}
+.sb-hero h1{font-size:40px;line-height:1.2;font-weight:900;margin:0 0 12px}
+.sb-hero .sb-sub{font-size:21px;color:var(--sb-ink-2);max-width:760px;margin:0 auto 20px}
+.sb-badge{display:inline-flex;gap:8px;align-items:center;font-size:15px;font-weight:600;color:var(--sb-royal);background:var(--sb-royal-soft);border-radius:999px;padding:8px 16px;text-decoration:none}
+.sb-note{display:block;margin-top:14px;font-size:14px;color:var(--sb-muted)}
+
+.sb-nav{position:sticky;top:0;z-index:10;background:var(--sb-paper);backdrop-filter:blur(8px)}
+.sb-nav ul{list-style:none;margin:0 auto;padding:0 22px;max-width:1060px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.sb-nav a{display:block;padding:12px 14px;font-size:15.5px;font-weight:600;color:var(--sb-ink-2);text-decoration:none;border-bottom:3px solid transparent}
+.sb-nav a:hover{color:var(--sb-royal);border-bottom-color:var(--sb-royal)}
+
+.sb-key{background:var(--sb-dark);color:#fff;border-radius:24px;padding:40px 44px;margin:30px 0 20px;text-align:center;position:relative;overflow:hidden}
+.sb-key::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:120%;background:radial-gradient(ellipse at 50% 100%,var(--sb-glow-faint),transparent 60%);pointer-events:none}
+.sb-key .sb-label{position:relative;font-size:15px;font-weight:600;color:var(--sb-on-dark-accent);margin:0 0 12px;letter-spacing:.02em}
+.sb-key .sb-text{position:relative;font-size:24px;line-height:1.55;font-weight:500;margin:0 auto;max-width:860px}
+.sb-key .sb-text2{position:relative;font-size:19px;line-height:1.6;font-weight:400;color:var(--sb-on-dark-text);margin:14px auto 0;max-width:860px}
+.sb-key .sb-grow{position:relative;list-style:none;padding:0;margin:18px auto 0;max-width:820px;text-align:right;font-size:18px;line-height:1.6}
+.sb-key .sb-grow li{padding:8px 0;border-top:1px solid rgba(255,255,255,.14)}
+.sb-key .sb-grow li b{color:var(--sb-on-dark-accent);font-weight:600}
+.sb-key .sb-para{position:relative;font-size:20px;line-height:1.75;font-weight:400;margin:0 0 14px;text-align:right;max-width:820px;margin-inline:auto}
+.sb-key .sb-para:last-child{margin-bottom:0}
+
+.sb-sec{padding:56px 0}
+.sb-sec.sb-band{background:var(--sb-band)}
+.sb-sec.sb-white{background:var(--sb-card)}
+.sb-sec h2{font-size:36px;font-weight:800;margin:0 0 6px;line-height:1.25;text-align:center}
+.sb-lead{font-size:18px;color:var(--sb-muted);margin:0 auto 26px;font-weight:500;text-align:center;max-width:760px}
+.sb-why{font-size:16px;color:var(--sb-muted);background:var(--sb-royal-soft);border-radius:12px;padding:10px 16px;margin:0 0 22px;text-align:right}
+
+.sb-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 26px}
+.sb-chip{background:var(--sb-card);border:1px solid var(--sb-line);border-radius:16px;padding:16px 18px;text-align:right}
+.sb-chip .sb-k{display:block;font-size:14px;font-weight:600;color:var(--sb-royal);margin-bottom:4px}
+.sb-chip .sb-v{display:block;font-size:18px;font-weight:700;line-height:1.4}
+
+.sb-grid{display:grid;gap:18px}
+.sb-grid.c2{grid-template-columns:1fr 1fr}
+.sb-grid.c3{grid-template-columns:repeat(3,1fr)}
+.sb-card{background:var(--sb-card);border:1.5px solid var(--sb-line);border-radius:18px;padding:26px;text-align:right;box-shadow:0 6px 18px rgba(26,15,46,.04)}
+.sb-card h3{font-size:21px;font-weight:700;margin:0 0 10px;line-height:1.35}
+.sb-card p{font-size:18px;color:var(--sb-ink-2);margin:0 0 10px}
+.sb-card p:last-child{margin-bottom:0}
+.sb-card .sb-meta{font-size:15px;color:var(--sb-muted)}
+
+.sb-quotes{display:grid;gap:12px}
+.sb-quote{background:var(--sb-card);border:1px solid var(--sb-line);border-radius:14px;padding:16px 20px 16px 20px;font-size:19px;color:var(--sb-ink-2);margin:0;position:relative;padding-inline-start:52px}
+.sb-quote .sb-src{display:block;font-size:14px;color:var(--sb-muted);margin-top:6px}
+.sb-quote::before{content:"״";position:absolute;inset-inline-start:18px;top:6px;font-size:34px;font-weight:900;color:var(--sb-glow);line-height:1}
+
+.sb-tablewrap{overflow-x:auto;border-radius:16px;border:1.5px solid var(--sb-line);background:var(--sb-card);margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:17px}
+th,td{padding:12px 14px;text-align:right;vertical-align:top;border-bottom:1px solid var(--sb-line);line-height:1.45}
+th{background:var(--sb-th);font-weight:700;font-size:15.5px;color:var(--sb-ink)}
+td{font-weight:700;font-size:18px}
+td:first-child{font-weight:600;font-size:16px}
+td .sb-why{display:block;font-size:14px;line-height:1.45;color:var(--sb-muted);font-weight:400;margin-top:3px;background:none;border:0;padding:0}
+tr:last-child td{border-bottom:none}
+td.sb-pick{background:var(--sb-band)}
+th.sb-pick{background:var(--sb-royal);color:#fff}
+td+td,th+th{border-inline-start:1px solid var(--sb-line)}
+
+.sb-ladder{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:18px;align-items:stretch}
+.sb-tier{background:var(--sb-card);border:1.5px solid var(--sb-line);border-radius:20px;padding:26px;text-align:right;display:flex;flex-direction:column;gap:10px}
+.sb-tier.sb-flag{border:2px solid var(--sb-royal);box-shadow:0 20px 44px rgba(0,0,0,.12)}
+.sb-tier .sb-stage{font-size:14px;font-weight:700;color:var(--sb-royal);margin:0}
+.sb-tier h3{font-size:23px;font-weight:800;margin:0 0 6px;line-height:1.3}
+.sb-tier .sb-row{font-size:17px;color:var(--sb-ink-2)}
+.sb-tier .sb-row b{color:var(--sb-ink);font-weight:700}
+.sb-tier .sb-price{margin-top:auto;padding-top:12px;border-top:1px dashed var(--sb-line);font-size:16px;color:var(--sb-ink)}
+
+.sb-hook{background:var(--sb-card);border:1.5px solid var(--sb-line);border-radius:18px;padding:24px;text-align:right}
+.sb-hook .sb-k{font-size:14px;font-weight:700;color:var(--sb-royal);margin:0 0 8px}
+.sb-hook .sb-h{font-size:22px;font-weight:800;line-height:1.3;margin:0 0 8px}
+.sb-hook .sb-s{font-size:17px;color:var(--sb-ink-2);margin:0}
+.sb-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.sb-step{background:var(--sb-card);border:1px solid var(--sb-line);border-radius:16px;padding:18px;font-size:17px;color:var(--sb-ink-2)}
+.sb-list{margin:0;padding:0;list-style:none}
+.sb-list li{padding:10px 0;border-bottom:1px solid var(--sb-line);font-size:18px;color:var(--sb-ink-2)}
+.sb-list li:last-child{border-bottom:none}
+.sb-list li b{color:var(--sb-ink);font-weight:700}
+
+.sb-plan{background:var(--sb-card);border:1.5px solid var(--sb-line);border-radius:18px;padding:8px 26px}
+.sb-week{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid var(--sb-line);font-size:17.5px}
+.sb-week .sb-exit{display:block;margin-top:10px;font-weight:700;color:var(--sb-royal)}
+.sb-week:last-child{border-bottom:none}
+.sb-week .sb-w{font-weight:800;color:var(--sb-royal);font-size:19px;line-height:1.4}
+.sb-week .sb-what .sb-st{display:block;font-weight:700;color:var(--sb-ink);margin-bottom:4px}
+.sb-week .sb-w small{display:block;font-weight:500;color:var(--sb-muted);font-size:14px}
+.sb-week .sb-what{color:var(--sb-ink-2);max-width:820px;line-height:1.65}
+.sb-week .sb-what b{color:var(--sb-ink);font-weight:700}
+.sb-week .sb-say{font-size:16.5px;color:var(--sb-muted);margin:6px 0 0}
+.sb-foot{padding:30px 0 60px;font-size:15px;color:var(--sb-muted);text-align:center}
+.sb-foot a{color:var(--sb-royal)}
+
+@media (max-width:860px){
+  body{font-size:18px}
+  .sb-hero{padding:40px 0 22px}
+  .sb-hero h1{font-size:28px}
+  .sb-hero .sb-sub{font-size:18px}
+  .sb-key{padding:28px 22px}
+  .sb-key .sb-text{font-size:21px}
+  .sb-sec{padding:40px 0}
+  .sb-sec h2{font-size:27px}
+  .sb-chips,.sb-steps{grid-template-columns:1fr 1fr}
+  .sb-grid.c2,.sb-grid.c3,.sb-ladder{grid-template-columns:1fr}
+  .sb-week{grid-template-columns:1fr;gap:6px}
+  .sb-card p,.sb-tier .sb-row{font-size:17px}
+  .sb-nav a{padding:10px 10px;font-size:14px}
+}
+@media (max-width:520px){.sb-chips,.sb-steps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){
+  .sb-key{animation:sb-rise .7s ease-out both}
+  @keyframes sb-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+}
+@media print{body{background:#fff}.sb-nav{display:none}.sb-sec.sb-band{background:#fff}.sb-card,.sb-tier,.sb-week,.sb-key{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header class="sb-hero"><div class="sb-wrap">
+  <p class="sb-eyebrow">גרסה 1.0 (טיוטה) · 25.10.2026 · תרגיל: תכנון סוכן AI (קורס מטמעי AI)</p>
+  <h1>אפיון: סוכן AI להשוואת מחירים וקנייה חכמה</h1>
+  <p class="sb-sub">קישור לריפו בגיטהאב: יתווסף לאחר יצירת הריפו</p>
+</div></header>
+
+<nav class="sb-nav"><ul>
+  <li><a href="#goal">מטרה</a></li>
+  <li><a href="#flow">זרימה</a></li>
+  <li><a href="#tools">כלים</a></li>
+  <li><a href="#memory">זיכרון</a></li>
+  <li><a href="#safety">בטיחות</a></li>
+  <li><a href="#build">מימוש</a></li>
+</ul></nav>
+
+<div class="sb-wrap"><div class="sb-key">
+  <p class="sb-label">מטרה</p>
+  <p class="sb-text">סוכן שמקבל מהמשתמשת מוצר שהיא רוצה לקנות (בכל קטגוריה), בודק כמה חנויות באינטרנט, ומחזיר המלצה אחת ברורה עם הנימוק, ולצידה טבלת השוואה.</p>
+  <p class="sb-text2">הסוכן זוכר העדפות והיסטוריית מחירים, ומתריע כשהמחיר יורד.</p>
+</div></div>
+
+<section class="sb-sec sb-band" id="goal"><div class="sb-wrap">
+  <h2>1. מטרה ותרחישי שימוש</h2>
+  <div class="sb-grid c2" style="margin-bottom:26px">
+    <div class="sb-card"><h3>מה הסוכן עושה</h3><p>מקבל מוצר, בודק כמה חנויות, ומחזיר המלצה אחת ברורה עם הנימוק, ולצידה טבלת השוואה.</p></div>
+    <div class="sb-card"><h3>מה הסוכן לא עושה</h3><p>לא מבצע רכישה, לא מזין פרטי תשלום ולא מתחבר לחשבונות. הוא ממליץ, והמשתמשת קונה בעצמה.</p></div>
+  </div>
+  <h3 style="text-align:center;font-size:24px;font-weight:700;margin:0 0 14px">תרחישי שימוש</h3>
+  <div class="sb-tablewrap"><table>
+    <tr><th>#</th><th>תרחיש</th><th>תוצאה</th></tr>
+    <tr><td>1</td><td>"אני מחפשת שואב אבק רובוטי עד 1,500 ₪"</td><td>טבלת השוואה של 3–5 חנויות והמלצה אחת</td></tr>
+    <tr><td>2</td><td>"תעקוב אחרי המחיר של האוזניות האלה ותגיד לי כשיורד מתחת ל־400"</td><td>התראה במייל כשהמחיר מתחת לסף</td></tr>
+    <tr><td>3</td><td>"מה כדאי לקנות במקום, זה אזל"</td><td>מוצרים חלופיים דומים עם הסבר ההבדלים</td></tr>
+    <tr><td>4</td><td>"תשווה שוב את מה שחיפשתי בחודש שעבר"</td><td>השוואה מחדש מול היסטוריית המחירים</td></tr>
+  </table></div>
+</div></section>
+
+<section class="sb-sec sb-white" id="flow"><div class="sb-wrap">
+  <h2>2. זרימת הפעולה</h2>
+  <div class="sb-plan">
+    <div class="sb-week"><div class="sb-w">שלב 1</div><div class="sb-what"><span class="sb-st">הבנת הבקשה</span>הסוכן מחלץ מוצר, תקציב וקריטריונים. אם חסר מידע קריטי (למשל מידה), הוא שואל שאלה אחת קצרה ולא יותר.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 2</div><div class="sb-what"><span class="sb-st">שליפת העדפות מהזיכרון</span>למשל "מעדיפה משלוח חינם" או "לא קונה ממותג X".</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 3</div><div class="sb-what"><span class="sb-st">איתור חנויות</span>חיפוש המוצר בגוגל שופינג ובמנוע חיפוש, ואיסוף 5–8 קישורים לחנויות מועמדות.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 4</div><div class="sb-what"><span class="sb-st">קריאת דפים</span>לכל קישור הסוכן טוען את הדף ומחלץ שם מוצר, מחיר, עלות משלוח, זמינות במלאי ודירוג.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 5</div><div class="sb-what"><span class="sb-st">התאמת מוצרים</span>בדיקה שמדובר באותו מוצר (לפי מק"ט, דגם ומאפיינים). מוצר לא תואם יוצא מההשוואה, ונרשם למה.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 6</div><div class="sb-what"><span class="sb-st">חישוב מחיר סופי</span>מחיר + משלוח − הנחות. הנתון נבדק במחשבון, לא במודל.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 7</div><div class="sb-what"><span class="sb-st">בדיקת אמינות</span>גיל החנות, דירוגי ביקורות, מדיניות החזרות. חנות חשודה מסומנת.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 8</div><div class="sb-what"><span class="sb-st">דירוג והמלצה</span>המודל מדרג לפי המשקלים של המשתמשת (מחיר, אמינות, זמן אספקה) ומנסח המלצה אחת ונימוק.</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 9</div><div class="sb-what"><span class="sb-st">מסירה</span>טבלת השוואה, המלצה, וקישורים. מוצגות גם נקודות אי־ודאות (למשל "המחיר לא אומת").</div></div>
+    <div class="sb-week"><div class="sb-w">שלב 10</div><div class="sb-what"><span class="sb-st">עדכון זיכרון</span>שמירת המחירים שנמצאו, ההמלצה, ובחירה שלה אם דווחה.</div></div>
+  </div>
+</div></section>
+
+<section class="sb-sec sb-band" id="tools"><div class="sb-wrap">
+  <h2>3. כלים</h2>
+  <div class="sb-tablewrap"><table>
+    <tr><th>כלי</th><th>תפקיד</th><th>דוגמה למימוש</th></tr>
+    <tr><td>חיפוש באינטרנט</td><td>איתור חנויות ומוצרים</td><td>Google Shopping / SerpAPI / חיפוש מובנה</td></tr>
+    <tr><td>סריקת דפים</td><td>טעינת דף חנות והחזרת תוכן</td><td>Apify, Playwright</td></tr>
+    <tr><td>חילוץ נתונים</td><td>הפיכת דף לא מובנה לשדות (שם, מחיר, משלוח)</td><td>מודל שפה עם סכמה קבועה (JSON)</td></tr>
+    <tr><td>מחשבון</td><td>חישוב מחיר סופי והפרשים</td><td>פונקציית קוד, לא המודל</td></tr>
+    <tr><td>מאגר זיכרון</td><td>שמירה ושליפה של העדפות והיסטוריית מחירים</td><td>Airtable / SQLite</td></tr>
+    <tr><td>שליחת התראות</td><td>הודעה כשהמחיר יורד</td><td>מייל או וואטסאפ</td></tr>
+    <tr><td>תזמון</td><td>בדיקת מחירים חוזרת לפריטים במעקב</td><td>Make / cron</td></tr>
+  </table></div>
+  <p class="sb-why">עיקרון: כל מספר עובר דרך כלי (מחשבון, חילוץ עם בדיקה), ולא דרך "זיכרון" של המודל. המודל מחליט, הכלים מחשבים.</p>
+</div></section>
+
+<section class="sb-sec sb-white" id="memory"><div class="sb-wrap">
+  <h2>4. ניהול זיכרון</h2>
+  <div class="sb-grid c2" style="margin-bottom:26px">
+    <div class="sb-card"><h3>זיכרון קצר טווח (בתוך שיחה)</h3>
+      <p>הבקשה הנוכחית, הקריטריונים, והחנויות שנסרקו כרגע.</p>
+      <p>נשמר בהקשר השיחה ונמחק בסופה.</p>
+      <p>כדי לא להעמיס, דפי חנות גולמיים לא נשמרים: רק השדות שחולצו מהם.</p></div>
+    <div class="sb-card"><h3>זיכרון ארוך טווח (בין שיחות)</h3>
+      <p>מה שנשמר בין שיחות מתחלק לארבעה סוגים, כמפורט בטבלה שמתחת.</p></div>
+  </div>
+  <div class="sb-tablewrap"><table>
+    <tr><th>סוג</th><th>מה נשמר</th><th>דוגמה</th><th>מבנה</th></tr>
+    <tr><td>העדפות</td><td>כללים קבועים של המשתמשת</td><td>"משלוח חינם חשוב", "לא קונה מחנות X"</td><td>רשומה לכל העדפה, עם תאריך ומקור</td></tr>
+    <tr><td>היסטוריית מחירים</td><td>מחיר לפי מוצר, חנות ותאריך</td><td>"אוזניות Y בחנות Z: 389 ₪, 12.10"</td><td>טבלה: מוצר, חנות, מחיר, משלוח, תאריך</td></tr>
+    <tr><td>מעקבים פעילים</td><td>מוצרים שהמשתמשת ביקשה לעקוב אחריהם</td><td>"התראה מתחת ל־400 ₪"</td><td>טבלה: מוצר, סף, ערוץ התראה, סטטוס</td></tr>
+    <tr><td>חנויות</td><td>דירוג אמינות שנצבר</td><td>"חנות Z: 4 מתוך 5, איחור במשלוח"</td><td>טבלה: חנות, ציון, הערות</td></tr>
+  </table></div>
+  <h3 style="text-align:center;font-size:24px;font-weight:700;margin:0 0 14px">כללי ניהול</h3>
+  <div class="sb-card"><ul class="sb-list">
+    <li><b>כתיבה:</b> העדפה נשמרת רק אחרי שהמשתמשת אישרה ("לשמור את זה לפעם הבאה?") או חזרה על אותה בקשה פעמיים.</li>
+    <li><b>שליפה:</b> בתחילת כל שיחה נשלפות רק ההעדפות הרלוונטיות לקטגוריה, ולא כל הזיכרון.</li>
+    <li><b>רענון:</b> מחיר ישן מ־7 ימים לא משמש להמלצה ללא בדיקה מחדש.</li>
+    <li><b>מחיקה:</b> המשתמשת יכולה למחוק פריט או לבקש "שכחי הכול". היסטוריית מחירים נמחקת אחרי 12 חודשים.</li>
+    <li><b>סתירות:</b> כשהעדפה חדשה סותרת ישנה, הסוכן שואל ומעדכן, ולא מניח.</li>
+  </ul></div>
+</div></section>
+
+<section class="sb-sec sb-band" id="scale"><div class="sb-wrap">
+  <h2>5. הרחבה מקטגוריה אחת לכל קטגוריה</h2>
+  <div class="sb-tablewrap"><table>
+    <tr><th>אתגר</th><th>פתרון</th></tr>
+    <tr><td>כל חנות בנויה אחרת</td><td>חילוץ עם מודל שפה לפי סכמת JSON קבועה, ולא לפי מבנה HTML</td></tr>
+    <tr><td>קריטריונים שונים לכל קטגוריה</td><td>הסוכן מציע 3–4 קריטריונים לפי סוג המוצר ושואל מה חשוב (למשל מפרט למחשב, מידה לנעליים)</td></tr>
+    <tr><td>קושי להתאים אותו מוצר בחנויות שונות</td><td>שלב התאמה: מק"ט קודם, ואם אין, השוואת דגם ומאפיינים עם ציון ביטחון. מתחת לסף, המוצר לא נכלל</td></tr>
+    <tr><td>עלות וזמן</td><td>הגבלה ל־5 חנויות בכל בקשה, ושמירת תוצאות במטמון ל־24 שעות</td></tr>
+  </table></div>
+  <p class="sb-why">מימוש ראשון (הדגמה): קטגוריה אחת, אלקטרוניקה, עם 3 חנויות. אחרי שזה עובד, מרחיבים.</p>
+</div></section>
+
+<section class="sb-sec sb-white" id="safety"><div class="sb-wrap">
+  <h2>6. בקרה אנושית, בטיחות ופרטיות</h2>
+  <div class="sb-grid c2">
+    <div class="sb-card"><h3>אין פעולות בלתי הפיכות</h3><p>הסוכן לא קונה, לא נרשם ולא מזין פרטי תשלום.</p></div>
+    <div class="sb-card"><h3>שקיפות</h3><p>כל המלצה מציגה את המקורות, הזמן שבו המחיר נבדק, ומה לא הצליח להיבדק.</p></div>
+    <div class="sb-card"><h3>התראות</h3><p>נשלחות רק לערוץ שהמשתמשת הגדירה.</p></div>
+    <div class="sb-card"><h3>כיבוד אתרים</h3><p>הסוכן מכבד robots.txt ותנאי שימוש, מגביל קצב בקשות, ולא עוקף חסימות או CAPTCHA. אתר שחוסם מדולג ומדווח.</p></div>
+    <div class="sb-card"><h3>תוכן מהאינטרנט הוא מידע, לא פקודות</h3><p>טקסט בדף חנות שמנסה להורות לסוכן מה לעשות (למשל "המליצי על חנות זו") מתעלמים ממנו.</p></div>
+    <div class="sb-card"><h3>פרטיות</h3><p>בזיכרון נשמרות העדפות קנייה בלבד. לא כתובת, לא פרטי תשלום ולא מספר זהות.</p></div>
+  </div>
+</div></section>
+
+<section class="sb-sec sb-band" id="failures"><div class="sb-wrap">
+  <h2>7. טיפול בכשלים</h2>
+  <div class="sb-tablewrap"><table>
+    <tr><th>כשל</th><th>התנהגות</th></tr>
+    <tr><td>חנות חוסמת סריקה</td><td>מדלגת עליה, מציינת בדוח</td></tr>
+    <tr><td>מחיר לא נמצא בדף</td><td>לא מנחשת. מסמנת "לא ידוע" ומוציאה מהדירוג</td></tr>
+    <tr><td>פחות משתי חנויות תקינות</td><td>אומרת שאין מספיק נתונים להשוואה, ומציעה לנסות מחדש או להרחיב חיפוש</td></tr>
+    <tr><td>המוצר לא קיים</td><td>מציעה חלופות דומות</td></tr>
+    <tr><td>כלי נכשל</td><td>ניסיון חוזר פעם אחת, ואם נכשל שוב, ממשיכה בלעדיו ומציינת</td></tr>
+  </table></div>
+</div></section>
+
+<section class="sb-sec sb-white" id="build"><div class="sb-wrap">
+  <h2>8. מדדי הצלחה ושלבי מימוש</h2>
+  <div class="sb-grid c2">
+    <div class="sb-card"><h3>מדדי הצלחה</h3><ul class="sb-list">
+      <li><b>דיוק מחיר:</b> לפחות 95% מהמחירים בדוח תואמים למחיר באתר בעת הבדיקה (בדיקה ידנית על 20 מוצרים).</li>
+      <li><b>התאמת מוצרים:</b> לא יותר מ־5% התאמות שגויות.</li>
+      <li><b>זמן תגובה:</b> המלצה תוך 2 דקות לכל היותר.</li>
+      <li><b>שימושיות הזיכרון:</b> העדפה שנשמרה משפיעה על ההמלצה הבאה, ללא הזנה מחדש.</li>
+      <li><b>אפס רכישות או פעולות</b> שבוצעו בלי אישור.</li>
+    </ul></div>
+    <div class="sb-card"><h3>שלבי מימוש מוצעים</h3><ul class="sb-list">
+      <li>אפיון (מסמך זה) ואישורו.</li>
+      <li>אב־טיפוס: סריקת 3 חנויות אלקטרוניקה וחילוץ שדות, בלי זיכרון.</li>
+      <li>הוספת מחשבון, התאמת מוצרים ודירוג.</li>
+      <li>הוספת זיכרון: העדפות והיסטוריית מחירים.</li>
+      <li>מעקב מחירים והתראות.</li>
+      <li>בדיקות מול מדדי ההצלחה, והרחבה לקטגוריות נוספות.</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<section class="sb-sec sb-band" id="open"><div class="sb-wrap">
+  <h2>9. שאלות פתוחות</h2>
+  <div class="sb-tablewrap"><table>
+    <tr><th>#</th><th>שאלה</th><th>הנחת עבודה</th></tr>
+    <tr><td>1</td><td>באיזה ערוץ הסוכן פועל?</td><td>צ'אט פשוט, ואחר כך וואטסאפ</td></tr>
+    <tr><td>2</td><td>איפה נשמר הזיכרון?</td><td>Airtable</td></tr>
+    <tr><td>3</td><td>אילו חנויות בישראל ייסרקו ראשונות?</td><td>לבחור 3 עם ממשק יציב</td></tr>
+    <tr><td>4</td><td>האם להשתמש באפיליאייט?</td><td>לא, כדי לשמור על ניטרליות ההמלצה</td></tr>
+  </table></div>
+</div></section>
+
+<footer class="sb-foot"><div class="sb-wrap">נבנה מתוך SPEC.md · 25.10.2026</div></footer>
+
+</body>
+</html>
